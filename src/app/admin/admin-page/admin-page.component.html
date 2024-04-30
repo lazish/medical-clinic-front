@@ -1,0 +1,262 @@
+<div class="main-container">
+  <div class="container">
+    <div class="row my-4">
+      <div class="col-4">
+        <div class="round bg-white shadow-small content-center nav-item">
+          <i
+            class="pi pi-align-left text-cian-dark"
+            style="margin-right: 1.5rem"
+          ></i>
+          <app-admin-navbar (select)="onSelect($event)"></app-admin-navbar>
+        </div>
+      </div>
+      <div *ngIf="selectedNavbarItem.name === 'ექიმები'" class="col">
+        <div class="row">
+          <div class="col">
+            <button
+              class="round custom-btn shadow-small text-sm content-center bg-white text-default w-100"
+              (click)="onDoctor()"
+            >
+              ექიმი
+            </button>
+          </div>
+          <div class="col">
+            <button
+              class="round custom-btn shadow-small text-sm content-center bg-white text-default w-100"
+              (click)="onClient()"
+            >
+              მომხმარებელი
+            </button>
+          </div>
+          <div class="col">
+            <button
+              class="round custom-btn shadow-small text-sm content-center bg-white text-default w-100"
+              (click)="onAdmin()"
+            >
+              ადმინისტრატორი
+            </button>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="selectedNavbarItem.name === 'კატეგორიები'" class="col">
+        <button
+          pButton
+          label="დამატება"
+          icon="pi pi-plus"
+          class="p-button-rounded p-button-sm py-2 text-sm p-button-success bg-green-light mx-1"
+          (click)="onAddCategory()"
+        ></button>
+      </div>
+    </div>
+
+    <!-- doctorTable -->
+    <div
+      *ngIf="selectedNavbarItem.name === 'ექიმები'"
+      class="custom-card shadow-small"
+    >
+      <p-table
+        #DoctorTable
+        class="custom-table"
+        [value]="userTableFor === 'doctor' ? doctors : users"
+        [rows]="6"
+        [paginator]="true"
+        [tableStyle]="{ 'min-width': '75rem' }"
+        [(selection)]="selectedItem"
+        [rowHover]="true"
+        selectionMode="single"
+        (onRowSelect)="onRowSelect($event)"
+        dataKey="id"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [showCurrentPageReport]="true"
+      >
+        <ng-template pTemplate="header">
+          <tr>
+            <th
+              pSortableColumn="firstname"
+              style="min-width: 15rem"
+              class="text-center"
+            >
+              სახელი <p-sortIcon field="firstname"></p-sortIcon>
+            </th>
+            <th pSortableColumn="{{ categoryOrID }}" class="text-center">
+              {{ userTableFor === "doctor" ? "კატეგორია" : "პირადი ნომერი" }}
+              <p-sortIcon field="{{ categoryOrID }}"></p-sortIcon>
+            </th>
+            <th class="content-center">ფოტოსურათი</th>
+            <th
+              pSortableColumn="{{ ratingOrEmail }}"
+              style="min-width: 10rem"
+              class="text-center"
+            >
+              {{ userTableFor === "doctor" ? "რეიტინგი" : "Email" }}
+              <p-sortIcon field="{{ ratingOrEmail }}"></p-sortIcon>
+            </th>
+            <th *ngIf="userTableFor === 'doctor'" class="text-center">CV</th>
+            <th class="text-center">Actions</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-user>
+          <tr [pSelectableRow]="user" class="text-md text-default">
+            <td class="text-center">
+              {{ user.firstname + " " + user.lastname }}
+            </td>
+            <td class="text-center">
+              {{
+                userTableFor === "doctor"
+                  ? user.category.name
+                  : user.identityNumber
+              }}
+            </td>
+            <td class="text-center">
+              <p-avatar
+                *ngIf="!user.imageUrl"
+                shape="circle"
+                label="{{ user.firstname.slice(0, 1) }}"
+              ></p-avatar>
+              <p-avatar
+                *ngIf="user.imageUrl"
+                shape="circle"
+                image="{{ user.imageUrl }}"
+              ></p-avatar>
+            </td>
+            <td>
+              <p-rating
+                *ngIf="userTableFor === 'doctor'"
+                [ngModel]="user.rating"
+                [readonly]="true"
+                [cancel]="false"
+                [readonly]="true"
+                [iconOnStyle]="{ color: '#fcad00' }"
+                class="text-center"
+              ></p-rating>
+              <span *ngIf="userTableFor !== 'doctor'" class="content-center">{{
+                user.email
+              }}</span>
+            </td>
+            <td *ngIf="userTableFor === 'doctor'" class="text-center">
+              <a
+                *ngIf="user.cv"
+                pButton
+                icon="pi pi-download"
+                class="p-button-rounded p-button-text text-center"
+                href="{{user.cv}}"
+                target="_blank"
+                style="width: 35px !important; height: 35px !important; text-decoration: none;"
+              ></a>
+              <span
+                *ngIf="!user.cv"
+                class="italic text-center text-md text-secondary"
+                >N/A</span
+              >
+            </td>
+            <td class="text-center">
+              <button
+                pButton
+                pRipple
+                icon="pi pi-pencil"
+                class="p-button-rounded p-button-success mx-2 bg-cian-light text-green-light"
+                (click)="editItem(user)"
+                style="width: 35px; height: 35px"
+              ></button>
+              <button
+                pButton
+                pRipple
+                icon="pi pi-trash"
+                class="p-button-rounded p-button-warning"
+                (click)="deleteItem(user)"
+                style="background-color: #ff93a6; width: 35px; height: 35px"
+              ></button>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+          <div class="flex align-items-center justify-content-between">
+            In total there are {{ doctors ? doctors.length : 0 }} docotors.
+          </div>
+        </ng-template>
+      </p-table>
+    </div>
+
+    <!-- categories -->
+
+    <div
+      *ngIf="selectedNavbarItem.name === 'კატეგორიები'"
+      class="w-100 content-center"
+    >
+      <div class="row w-100 bg-dange text-center">
+        <div class="col">
+          <div class="custom-card shadow-small">
+            <p-table
+              #DoctorTable
+              class="custom-table"
+              [value]="categories"
+              [rows]="6"
+              [paginator]="true"
+              [(selection)]="selectedItem"
+              [rowHover]="true"
+              selectionMode="single"
+              (onRowSelect)="onRowSelect($event)"
+              dataKey="id"
+            >
+              <ng-template pTemplate="header">
+                <tr>
+                  <th pSortableColumn="name" class="text-center">
+                    სახელი <p-sortIcon field="name"></p-sortIcon>
+                  </th>
+                  <th pSortableColumn="doctorCount" class="text-center">
+                    ექიმების რაოდენოაბ
+                    <p-sortIcon field="doctorCount"></p-sortIcon>
+                  </th>
+                  <th class="text-center">Actions</th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-category>
+                <tr class="text-md text-default">
+                  <td class="text-center">{{ category.name }}</td>
+                  <td class="text-center">
+                    {{ category.doctorCount ? category.doctorCount : 0 }}
+                  </td>
+                  <td class="content-center">
+                    <button
+                      pButton
+                      pRipple
+                      icon="pi pi-pencil"
+                      class="p-button-rounded p-button-success mx-2 bg-cian-light text-green-light"
+                      (click)="onEditCategory(category)"
+                      style="width: 35px; height: 35px"
+                    ></button>
+                    <button
+                      pButton
+                      pRipple
+                      icon="pi pi-trash"
+                      class="p-button-rounded p-button-warning"
+                      (click)="onDeleteCategory(category)"
+                      style="
+                        background-color: #ff93a6;
+                        width: 35px;
+                        height: 35px;
+                      "
+                    ></button>
+                  </td>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="summary">
+                <div class="d-flex">
+                  In total there are
+                  {{ categories ? categories.length : 0 }} categories
+                </div>
+              </ng-template>
+            </p-table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- dialog -->
+<p-confirmDialog [style]="{ width: '40vw' }"></p-confirmDialog>
+<app-create-or-update-category
+  [category]="categoryForUpdate"
+  (result)="onCategoryChange($event)"
+></app-create-or-update-category>

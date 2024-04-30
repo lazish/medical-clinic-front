@@ -1,0 +1,126 @@
+<div class="main-container w-100 bg-white">
+  <div class="container">
+    <div class="row py-2">
+      <div class="col-1">
+        <div
+          class="d-flex align-items-center"
+          (click)="onHome()"
+          style="cursor: pointer"
+        >
+          <img
+            src="assets/LogoRed.png"
+            alt=""
+            class="w-100"
+            style="max-height: 50px"
+          />
+          <span style="font-weight: 600 !important; color: #ff2c52"
+            >კლინიკა</span
+          >
+        </div>
+      </div>
+      <div class="col-7 content-center">
+        <app-navbar class="d-none d-lg-flex"></app-navbar>
+      </div>
+      <div class="col-2 content-center d-none d-md-flex">
+        <div class="round bg-cian-light" style="font-size: 0.9rem">
+          <div *ngIf="!loggedUser">
+            <a (click)="onLogin()">ავტორიზაცია/</a>
+            <a href="register">რეგისტრაცია</a>
+          </div>
+          <div *ngIf="loggedUser" class="avatar" (click)="onAvatar()">
+            <img src="assets/doctorDefault.png" alt="" />
+            <span class="mx-3 text-center">{{
+              loggedUser.firstname + " " + loggedUser.lastname
+            }}</span>
+            <i
+              class="pi pi-sign-out text-sm btn-single"
+              (click)="onLogout($event)"
+            ></i>
+          </div>
+        </div>
+      </div>
+      <div class="col d-flex align-items-center justify-content-end">
+        <app-language-selector
+          class="d-none d-lg-block"
+        ></app-language-selector>
+        <button
+          pButton
+          icon="pi pi-cog"
+          class="p-button-rounded p-button-secondary mx-1"
+          style="width: 2.2rem; height: 2.2rem"
+          (click)="onSettings()"
+        ></button>
+        <i class="pi pi-bars d-md-none"></i>
+      </div>
+    </div>
+  </div>
+  <div class="py-3" style="background-color: #ecf2f8">
+    <div class="container">
+      <div class="row">
+        <div class="d-none d-lg-flex col-5 d-flex align-items-center">
+          <div class="d-flex align-items-center">
+            <div class="circle content-center mx-2">
+              <i class="pi pi-phone text-cian-dark"></i>
+            </div>
+            <div class="text-md">032 2 100 100</div>
+          </div>
+          <div class="mx-2 d-flex align-items-center">
+            <div class="circle content-center mx-4">
+              <i class="pi pi-map-marker text-cian-dark"></i>
+            </div>
+            <div class="text-md">იაკობ ნიკოლაძე №10</div>
+          </div>
+        </div>
+
+        <div class="col">
+          <form [formGroup]="searchForm" (ngSubmit)="onSearch()">
+            <div class="row">
+              <div class="col-5">
+                <input
+                  formControlName="doctorName"
+                  id="doctorName"
+                  type="text"
+                  class="rounded-input text-sm mx-2"
+                  placeholder="მოძებნე ექიმი სახელით"
+                />
+              </div>
+              <div class="col-6">
+                <input
+                  formControlName="category"
+                  id="category"
+                  type="text"
+                  class="rounded-input text-sm mx-2"
+                  placeholder="მოძებნე სპეციალობით"
+                />
+              </div>
+              <div class="col-1">
+                <button
+                  pButton
+                  icon="pi pi-search"
+                  class="p-button-rounded"
+                  style="width: 40px; height: 40px; background-color: black"
+                  (click)="onSearch()"
+                ></button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modals -->
+<app-login></app-login>
+<app-settings></app-settings>
+
+<app-users-modal
+  *ngIf="showDoctrModal"
+  [data]="searchedDoctors"
+  [searchable]="false"
+  [userMode]="doctor"
+  (booking)="onBooking($event)"
+  (close)="onDoctorModalClose()"
+></app-users-modal>
+
+<p-confirmDialog [style]="{ width: '40vw' }"></p-confirmDialog>

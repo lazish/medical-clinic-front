@@ -1,0 +1,214 @@
+@import url("https://free.bboxtype.com/embedfonts/?family=FiraGO:400,600");
+* {
+  font-family: "FiraGO", sans-serif;
+  
+}
+.custom-card{
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  border: 1px solid transparent;
+}
+.custom-card:hover{
+  border: 1px solid #BAE4F6;
+  transition: .3s;
+}
+
+.round {
+  padding: 8px 15px !important;
+  border-radius: 30px !important;
+  white-space: nowrap;
+}
+
+.content-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.align-vertical-center{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* margins */
+.ml-0{
+  margin-left: 0 !important;
+}
+.ml-1{
+  margin-left: .2rem !important;
+}
+.ml-2{
+  margin-left: .5rem !important;
+}
+.ml-3{
+  margin-left: .7rem !important;
+}
+.ml-4{
+  margin-left: .9rem !important;
+}
+.ml-5{
+  margin-left: .12rem !important;
+}
+
+/* Inputs */
+.rounded-input {
+  padding: 8px 14px;
+  border-radius: 30px;
+  border: 2px solid rgba(200, 200, 200, 0.2);
+  width: 100%;
+}
+.rounded-input:focus {
+  outline: none;
+  border: 2px solid #bae4f6;
+}
+
+/* Buttons */
+.btn-single{
+  cursor: pointer;
+  font-weight: 600 !important;
+}
+.btn-single:hover{
+  color: red;
+}
+
+.custom-btn {
+  border: none;
+  cursor: pointer !important;
+}
+.custom-btn:hover{
+  background-color: #F0FAFF !important; 
+}
+.custom-btn:active{
+  background-color: #F0FAFF !important; 
+}
+
+.custom-link{
+  color: #18a4e1;
+  cursor: pointer;
+}
+.custom-link:hover{
+  color: #6ec0e3;
+}
+
+
+
+/* font-sizes */
+.text-xsm{
+  font-size: 12px !important;
+}
+.text-sm {
+  font-size: 13px !important;
+}
+.text-md {
+  font-size: 0.9rem !important;
+}
+.text.lg {
+  font-size: 1rem !important;
+}
+.text-xlg{
+  font-size: 1.2rem !important;
+}
+.caption {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.italic{
+  font-style: italic;
+}
+
+/* Text colors */
+.text-default {
+  color: #053354;
+}
+
+.text-cian-dark {
+  color: #18a4e1;
+}
+.text-bold{
+  font-weight: 600;
+}
+.text-green-light{
+  color: #3ACF99 !important;
+}
+/* Background colors */
+.bg-green-light{
+  background-color: #3ACF99 !important;
+}
+.bg-cian-light {
+  background-color: #f0faff !important;
+}
+.bg-default {
+  background-color: #053354 !important;
+}
+.bg-white{
+  background-color: white;
+}
+.bg-light{
+  background-color: #e4edf6;
+}
+.bg-gray{
+  background-color: #ECF2F8;
+}
+
+/* Shadows */
+.shadow-small{
+  box-shadow: rgba(99, 99, 99, 0.1) 0px 2px 12px 0px;
+}
+
+/* border */
+.border-light{
+  border: 1px solid rgba(200,200,200, .2);
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+/* table */
+.custom-table td,tr{
+  padding: 7px 10px !important;
+  font-size: 0.9rem;
+  color: #053354
+}
+.custom-table tr{
+  background-color: #F0FAFF;
+}
+.custom-card .p-paginator{
+  padding: 2px;
+  font-size: 0.9rem;
+}
+.custom-card .p-paginator-pages button{
+  width: 35px !important;
+  min-width: 30px !important;
+  height: 35px !important;
+  padding: 0 !important;
+}
+
+
+
+/* modify primeng */
+.p-tooltip .p-tooltip-text {
+  background-color: rgba(255, 255, 255,.9) !important;
+  color:black !important;
+  font-size: 0.8rem;
+  border-radius: 10px !important;
+  box-shadow: rgba(50, 50, 105, 0.15) 0px 2px 5px 0px, rgba(0, 0, 0, 0.05) 0px 1px 1px 0px !important;
+}
+
+.custom-dropdown{
+  width: 100%;
+  border-radius: 30px !important;
+  border: 2px solid rgba(200, 200, 200, 0.2);
+  padding: .5rem !important;  
+}
+.custom-dropdown:focus{
+  outline: none;
+  border: 2px solid #bae4f6;
+}
+
+.p-chip{
+  font-size: 0.8rem !important;
+  height: 1.29rem !important;
+}
+

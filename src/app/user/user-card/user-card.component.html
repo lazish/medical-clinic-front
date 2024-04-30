@@ -1,0 +1,111 @@
+<div class="main-container h-100 content-center">
+  <div class="shadow-small w-100 custom-card text-default h-100">
+    <app-user-card-skeleton *ngIf="loading"></app-user-card-skeleton>
+    <div *ngIf="!loading" class="row py-2">
+      <div
+      *ngIf="headerActions"
+      class="col-12 card-head content-center px-3"
+      style="justify-content: space-between"
+    >
+      <div
+        class="round bg-light px-2 py-0 content-center text-sm text-secondary"
+      >
+        <i class="pi pi-eye" style="font-size: 12px"></i>
+        <span class="mx-2">{{ user.views }}</span>
+      </div>
+      <i
+        [ngClass]="isUserPinned ? 'text-cian-dark' : 'text-secondary'"
+        class="pi pi-paperclip text-sm btn-pin mx-2"
+        (click)="onPin()"
+      ></i>
+    </div>
+
+    <div
+      [ngClass]="
+        vertical ? 'align-vertical-center' : 'd-flex align-items-center'
+      "
+      class="w-100"
+    >
+      <div
+        [ngClass]="!vertical ? ' d-none d-lg-block ml-3' : ''"
+        style="width: 40%; max-width: 170px"
+      >
+        <img
+          src="{{ user.imageUrl ? user.imageUrl : 'assets/doctorDefault.png' }}"
+          alt=""
+          class="w-100"
+          style="border-radius: 50%;"
+        />
+      </div>
+      <div
+        [ngClass]="!vertical ? 'col-sm-6 col-md-6 col-lg-3' : ''"
+      >
+        <div class="align-vertical-center">
+          <div>
+            <p class="mt-2 mb-0 text-md text-cian-dark" style="font-weight: 600">
+              {{ user.firstname ? user.firstname + " "+ user.lastname: "N/A" }}
+            </p>
+          </div>
+          <div class="category mb-2">
+            <span *ngIf="user.category" class="text-secondary text-md">{{user.category.name}}</span>
+          </div>
+          <div>
+            <p-rating
+              *ngIf="rating"
+              [cancel]="false"
+              [disabled]="ratingReadOnly"
+              [(ngModel)]="user.rating"
+              [iconOnStyle]="{ color: '#fcad00' }"
+            ></p-rating>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="footerActions" class="btn-booking my-1 mt-3 content-center">
+        <button
+          class="round custom-btn text-sm content-center bg-light text-default"
+          (click)="onBooking()"
+        >
+          {{footerActionText}} <i class="pi pi-chevron-right text-md mx-1"></i>
+        </button>
+      </div>
+
+      <div *ngIf="details" class="text-center my-2">
+        <div>
+          <span class="text-bold">პირადი ნომერი :</span>
+          <p class="text-secondary">
+            {{ user.identityNumber ? user.identityNumber : "00000000000" }}
+          </p>
+        </div>
+        <div>
+          <span class="text-bold">Email :</span>
+          <p class="text-secondary">
+            {{ user.email ? user.email : "N/A" }}
+          </p>
+        </div>
+        <div class="mb-2">
+          <span class="text-cian-dark"  (click)="onForgetPassword()" style="cursor: pointer;">პაროლის შეცვლა</span>
+        </div>
+        <div>
+          <span class="text-bold">დაჯავშნილია :</span>
+          <p class="text-secondary">
+            {{ user.bookCount ? user.bookCount : "( 0 )" }}
+          </p>
+        </div>
+      </div>
+
+      <div
+        [ngClass]="!vertical ? 'col-6' : ''"
+        *ngIf="experience"
+        class="experience text-sm"
+        style="border-left: 1px solid rgba(200, 200, 200, 0.3)"
+      >
+        <p class="m-2">
+          <span class="text-cian-dark">2017 - დღემდე</span>, ჩვენი კლინიკის
+          გენერალური დირექტორი
+        </p>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,14 @@
+.divider {
+  height: 2px;
+  width: 100%;
+  background-color: #18a4e1;
+  position: absolute;
+  bottom: 0;
+  z-index: 999 !important;
+}
+.nav-item{
+  cursor: pointer;
+}
+.nav-item:hover span{
+  color: red;
+}

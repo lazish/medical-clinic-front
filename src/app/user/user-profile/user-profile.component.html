@@ -1,0 +1,24 @@
+<div class="main-container">
+  <div class="container">
+    <div class="row py-5 g-5">
+      <div class="d-none d-md-block col-4 content-center">
+        <app-user-card
+          class="my-1"
+          [user]="currentUser"
+          [headerActions]="false"
+          [rating]="currentUser.role === 'doctor' ? true : false"
+          [ratingReadOnly]="true"
+          [footerActions]="false"
+          [details]="true"
+          (forgetPassword)="onForgetPassword()"
+        ></app-user-card>
+      </div>
+      <div class="col">
+        <app-calendar [CalendarUser]="currentUser" [calendarMode]="calendarmode"></app-calendar>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- dialog -->
+<app-forget-password></app-forget-password>

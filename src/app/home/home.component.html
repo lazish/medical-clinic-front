@@ -1,0 +1,70 @@
+<div class="main-container">
+  <div class="position-relative">
+    <img src="assets/banner.png" alt="" class="w-100" />
+    <div
+      class="w-100 py-5 d-flex align-items-center"
+      style="
+        background-color: rgba(15, 98, 134, 0.3);
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+      "
+    >
+      <div class="container d-none d-md-block">
+        <div class="row">
+          <div
+            class="col-sm-12 col-md-9 col-lg-4 my-md-2 my-lg-5"
+            style="color: white"
+          >
+            <h3 style="font-weight: 600">
+              აირჩიე კლინიკა რომელსაც შეგიძლია ენდო
+            </h3>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12 col-md-8 col-lg-5 my-5" style="color: white">
+            <div class="round bg-white d-flex content-center w-50">
+              <i class="pi pi-map-marker text-cian-dark mx-2"></i>
+              <span class="text-md align-items-center" style="color: black"
+                >იაკობ ნიკოლაძე №10</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row py-5 ">
+      <div class="d-none d-lg-block col-lg-3">
+        <app-categories (open)="onCategorySelect($event)"></app-categories>
+      </div>
+      <div class="col-md-12 col-lg-9" style="padding-left: 2rem;">
+        <div class="row gx-4 gy-3">
+          <app-user-card
+            class="col-sm-12 col-md-6 col-lg-4"
+            *ngFor="let doctor of filteredDoctors"
+            [user]="doctor"
+            [headerActions]="true"
+            [rating]="true"
+            [ratingReadOnly]="true"
+            [footerActions]="true"
+            [details]="false"
+            (booking)="onBooking($event)"
+            (pin)="onPin($event)"
+          ></app-user-card>
+        </div>
+        <div *ngIf="showAll" class="d-flex justify-content-end mt-2">
+          <span class="text-md text-cian-dark" style="cursor: pointer;" (click)="onShowAll()">ყველას ნახვა</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- modals -->
+<ng-container *ngIf="showDocotrModal">
+  <app-users-modal [data]="allDoctors" (close)="onDoctorModalClose()" (booking)="onBooking($event)"></app-users-modal>
+</ng-container>
